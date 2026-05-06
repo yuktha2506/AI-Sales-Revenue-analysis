@@ -30,7 +30,9 @@ Data flow: MySQL stores users, products, orders, and order items. The Python ser
 ## Quick Start
 
 1. Copy `.env.example` to `backend/.env` and `python_service/.env`.
-2. Create schema and demo records:
+2. Download dataset from:
+[<your-link>](https://www.kaggle.com/datasets/thedevastator/unlock-profits-with-e-commerce-sales-data?resource=download)
+3. Create schema and demo records:
 
 ```bash
 mysql -u root -p < database/schema.sql
