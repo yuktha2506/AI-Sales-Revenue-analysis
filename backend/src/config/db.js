@@ -1,4 +1,14 @@
 const mysql = require("mysql2/promise");
+const fs = require("fs");
+
+function sslOptions() {
+  const caPath = process.env.DB_SSL_CA_PATH;
+  if (!caPath) return undefined;
+  return {
+    ca: fs.readFileSync(caPath),
+    rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED !== "false"
+  };
+}
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST || "localhost",
@@ -9,7 +19,8 @@ const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   namedPlaceholders: true,
-  dateStrings: true
+  dateStrings: true,
+  ssl: sslOptions()
 });
 
 module.exports = { pool };
