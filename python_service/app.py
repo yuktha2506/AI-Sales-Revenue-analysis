@@ -18,7 +18,9 @@ def engine():
     host = os.getenv("MYSQL_HOST", os.getenv("DB_HOST", "localhost"))
     port = os.getenv("MYSQL_PORT", os.getenv("DB_PORT", "3306"))
     db = os.getenv("MYSQL_DATABASE", os.getenv("DB_NAME", "sales_analytics"))
-    return create_engine(f"mysql+pymysql://{user}:{password}@{host}:{port}/{db}", pool_pre_ping=True)
+    ca_path = os.getenv("MYSQL_SSL_CA_PATH", os.getenv("DB_SSL_CA_PATH"))
+    connect_args = {"ssl": {"ca": ca_path}} if ca_path else {}
+    return create_engine(f"mysql+pymysql://{user}:{password}@{host}:{port}/{db}", pool_pre_ping=True, connect_args=connect_args)
 
 DB_ENGINE = engine()
 
