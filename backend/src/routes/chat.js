@@ -16,7 +16,14 @@ router.post("/", async (req, res, next) => {
     context.viewer = { id: req.user.id, name: req.user.name, role: req.user.role };
     const answer = await askInsightsAssistant(body.question, context);
     res.json({ ...answer, groundedIn: { generatedAt: new Date().toISOString(), filters: body.filters || {} } });
-  } catch (error) { next(error); }
+  } catch (error) {
+  console.error("CHAT ROUTE ERROR:", error);
+  
+  res.status(500).json({
+    error: error.message,
+    stack: error.stack
+  });
+}
 });
 
 module.exports = router;
