@@ -34,7 +34,7 @@ function poolConfig() {
     user: env("DB_USER", "root"),
     password: env("DB_PASSWORD"),
     database: env("DB_NAME", "sales_analytics"),
-    ssl: sslOptions()
+    ssl: sslOptions() || { rejectUnauthorized: false }
   };
 }
 
