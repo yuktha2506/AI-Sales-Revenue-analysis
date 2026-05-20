@@ -24,7 +24,7 @@ function poolConfig() {
       user: decodeURIComponent(url.username),
       password: decodeURIComponent(url.password),
       database: url.pathname.replace("/", "") || env("DB_NAME", "defaultdb"),
-      ssl: sslOptions() || { rejectUnauthorized: true }
+      ssl: sslOptions() || { rejectUnauthorized: false }
     };
   }
 
