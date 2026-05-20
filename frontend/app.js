@@ -1,5 +1,5 @@
 const { useEffect, useMemo, useRef, useState } = React;
-const API_BASE = localStorage.getItem("apiBase") || "http://localhost:5000";
+const API_BASE = localStorage.getItem("apiBase") || "https://sales-analytics-backend-1zcz.onrender.com";
 
 function money(value) {
   return `INR ${Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
