@@ -1,8 +1,7 @@
-﻿USE sales_analytics;
 
 INSERT INTO users (name, email, password, role) VALUES
-('Admin User', 'admin@example.com', '$2a$12$xD6cxMNM3KHPxIarDTxotuQkjHBySTO6uR/8v7yggjjEPiR23ZQwS', 'admin'),
-('Demo Customer', 'customer@example.com', '$2a$12$xD6cxMNM3KHPxIarDTxotuQkjHBySTO6uR/8v7yggjjEPiR23ZQwS', 'user')
+('Admin User', 'admin@example.com', '$2a$12$dFEV5RsF7tQwt7Dv8QFm5uTJ0b4m6PDtAOrZnHXc3hiicmTaMPRD.', 'admin'),
+('Demo Customer', 'customer@example.com', '$2a$12$dFEV5RsF7tQwt7Dv8QFm5uTJ0b4m6PDtAOrZnHXc3hiicmTaMPRD.', 'user')
 ON DUPLICATE KEY UPDATE name = VALUES(name);
 
 INSERT INTO products (name, category, price, sku) VALUES
