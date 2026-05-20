@@ -14,17 +14,36 @@ function sslOptions() {
   };
 }
 
+function poolConfig() {
+  const serviceUri = env("DB_SERVICE_URI");
+  if (serviceUri) {
+    const url = new URL(serviceUri);
+    return {
+      host: url.hostname,
+      port: Number(url.port || 3306),
+      user: decodeURIComponent(url.username),
+      password: decodeURIComponent(url.password),
+      database: url.pathname.replace("/", "") || env("DB_NAME", "defaultdb"),
+      ssl: sslOptions() || { rejectUnauthorized: true }
+    };
+  }
+
+  return {
+    host: env("DB_HOST", "localhost"),
+    port: Number(env("DB_PORT", "3306")),
+    user: env("DB_USER", "root"),
+    password: env("DB_PASSWORD"),
+    database: env("DB_NAME", "sales_analytics"),
+    ssl: sslOptions()
+  };
+}
+
 const pool = mysql.createPool({
-  host: env("DB_HOST", "localhost"),
-  port: Number(env("DB_PORT", "3306")),
-  user: env("DB_USER", "root"),
-  password: env("DB_PASSWORD"),
-  database: env("DB_NAME", "sales_analytics"),
+  ...poolConfig(),
   waitForConnections: true,
   connectionLimit: 10,
   namedPlaceholders: true,
-  dateStrings: true,
-  ssl: sslOptions()
+  dateStrings: true
 });
 
 module.exports = { pool };
