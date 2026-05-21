@@ -42,31 +42,13 @@ async function askInsightsAssistant(question, context) {
     });
 
     return { answer: response.choices[0]?.message?.content || "No insight generated." };
-  } } catch (error) {
-
-  console.error("OPENAI ERROR FULL:", error);
-
-  console.error("STATUS:", error.status);
-
-  console.error("MESSAGE:", error.message);
-
-  console.error("RESPONSE:", error.response?.data);
-
-  if (
-    [401, 403, 408, 429, 500, 502, 503, 504].includes(error.status) ||
-    error.code ||
-    /timeout/i.test(error.message || "")
-  ) {
-
+  } catch (error) {
     const fallback = buildFallbackAnswer(question, context);
-
     return {
-      answer: `${fallback.answer} OpenAI could not be used right now, so this answer used local analytics data.`,
-      debug: error.message
+      answer: `${fallback.answer} OpenAI could not be used right now, so this answer used local analytics data.`
     };
   }
-
-  throw error;
 }
+
 
 module.exports = { askInsightsAssistant };
